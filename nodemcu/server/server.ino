@@ -1,50 +1,65 @@
+// Includes
 #include <ESP8266WiFi.h>
- 
+
+// Network Data
 const char* ssid = "HauntedMansion";
 const char* password = "monkeybaileyluna";
 
-const int pSig = 13; // GPIO13
+// Pins
+const int pRelay01 = 13; // GPIO13
 
+// Logging
+const bool debug = true;
+
+// Wifi Server Object
 WiFiServer server(80);
 
+// Setup
 void setup() {
 
   // Pin Modes
-  pinMode(pSig,OUTPUT);
+  pinMode(pRelay01,OUTPUT);
 
   // Pin States
-  digitalWrite(pSig,HIGH); // HIGH = OFF (NormOpen)
+  digitalWrite(pRelay01,HIGH); // HIGH = OFF (N.O. Relay)
+
+  if(debug){
+    Serial.begin(9600);
+    delay(1000);
   
-  Serial.begin(9600);
-  delay(1000);
+    // Connect to WiFi network
+    Serial.println();
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+  }
 
-  // Connect to WiFi network
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
+  // Connect to Wifi Network
   WiFi.begin(ssid, password);
-
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
+    if(debug){
+      Serial.print(".");
+    }
   }
-  Serial.println("");
-  Serial.println("WiFi connected");
- 
-  // Start the server
+  if(debug){
+    Serial.println("");
+    Serial.println("WiFi connected");
+  }
+  
+  // Start the Server
   server.begin();
-  Serial.println("Server started");
- 
-  // Print the IP address
-  Serial.print("Use this URL to connect: ");
-  Serial.print("http://");
-  Serial.print(WiFi.localIP());
-  Serial.println("/");
+  if(debug){
+    Serial.println("Server Started!");
+    Serial.print("Use this URL to connect: ");
+    Serial.print("http://");
+    Serial.print(WiFi.localIP());
+    Serial.println("/");
+  }
   
 }
 
+// Loop
 void loop() {
   
   // Check if a client has connected
@@ -54,7 +69,7 @@ void loop() {
   }
 
   // Wait until the client sends some data
-  Serial.println("new client");
+  Serial.println("New Client!");
   while(!client.available()){
     delay(1);
   }
@@ -67,11 +82,11 @@ void loop() {
   // Match the request
   int value = LOW;
   if (request.indexOf("/RELAY=ON") != -1)  {
-    digitalWrite(pSig, LOW);
+    digitalWrite(pRelay01, LOW);
     value = LOW;
   }
   if (request.indexOf("/RELAY=OFF") != -1)  {
-    digitalWrite(pSig, HIGH);
+    digitalWrite(pRelay01, HIGH);
     value = HIGH;
   }
 
@@ -82,20 +97,20 @@ void loop() {
   client.println("<!DOCTYPE HTML>");
   client.println("<html>");
  
-  client.print("Led pin is now: ");
+  client.print("Relay State: ");
  
   if(value == HIGH) {
-    client.print("On");
+    client.print("Closed");
   } else {
-    client.print("Off");
+    client.print("Open");
   }
   client.println("<br><br>");
-  client.println("<a href=\"/RELAY=ON\"\"><button>Turn On </button></a>");
-  client.println("<a href=\"/RELAY=OFF\"\"><button>Turn Off </button></a><br />");  
+  client.println("<a href=\"/RELAY=ON\"\"><button>Open Relay</button></a>");
+  client.println("<a href=\"/RELAY=OFF\"\"><button>Close Relay</button></a><br />");  
   client.println("</html>");
  
   delay(1);
-  Serial.println("Client disonnected");
+  Serial.println("Client Disconnected.");
   Serial.println("");  
   
 }
