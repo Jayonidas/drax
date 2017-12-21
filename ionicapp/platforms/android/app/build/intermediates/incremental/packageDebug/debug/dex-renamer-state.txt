@@ -1,4 +1,0 @@
-#Wed Dec 20 17:40:06 CST 2017
-base.0=D\:\\_JG\\code\\IonicTests\\IonicTest_03\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-renamed.0=classes.dex
-file.0=D\:\\_JG\\code\\IonicTests\\IonicTest_03\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0\\classes.dex

@@ -11,19 +11,31 @@ export class HomePage {
 
   }
 
-  relayOn(){
+  toggleRelay(relayID){
 
-  	var xhr = new XMLHttpRequest();
-  	xhr.open('GET', "http://192.168.1.23/RELAY=OFF", true);
-  	xhr.send();
+    var ip = "192.168.0.6";
 
-  }
+    // Get Current Relay State and then Toggle Relay
+    var queryUrl = "http://"+ip+"/queryRelay?relay="+relayID;
+    fetch(queryUrl).then(function(response) {
+      response.json().then(function(data) {
+        
+        // Toggle Relay
+        var toggleUrl = "";
 
-  relayOff(){
+        console.log("State: "+data);
 
-  	var xhr = new XMLHttpRequest();
-  	xhr.open('GET', "http://192.168.1.23/RELAY=ON", true);
-  	xhr.send();
+        if(data == 0){
+          toggleUrl = "http://"+ip+"/toggleRelay?"+relayID+"=1";
+        }
+        if(data == 1){
+          toggleUrl = "http://"+ip+"/toggleRelay?"+relayID+"=0";
+        }
+
+        fetch(toggleUrl);
+
+      });
+    });
 
   }
 

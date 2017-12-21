@@ -1,13 +1,22 @@
 // Includes
-#include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
 // Network Info
-const char* ssid = "HauntedMansion";
-const char* password = "monkeybaileyluna";
+const char* ssid = "";
+const char* password = "";
 
-// Pins
-const int pRelay01 = 13; // GPIO13
+// Pin Layout (NodeMCU)
+const int pRelay01 = 12; // GPIO12 (D6)
+const int pRelay02 = 13; // GPIO13 (D7)
+const int pRelay03 = 15; // GPIO15 (D8)
+
+// Relay ID Array
+int relays[4] = {
+  0,
+  pRelay01,
+  pRelay02,
+  pRelay03
+};
 
 // Logging
 const bool debug = true;
@@ -20,9 +29,13 @@ void setup() {
 
   // Pin Modes
   pinMode(pRelay01,OUTPUT);
+  pinMode(pRelay02,OUTPUT);
+  pinMode(pRelay03,OUTPUT);
 
-  // Pin States
-  digitalWrite(pRelay01,HIGH); // HIGH = OFF (N.O. Relay)
+  // Initial Pin States
+  digitalWrite(pRelay01,LOW);
+  digitalWrite(pRelay02,LOW);
+  digitalWrite(pRelay03,LOW);
 
   if(debug){
     Serial.begin(9600);
@@ -33,7 +46,7 @@ void setup() {
     Serial.println(ssid);
   }
 
-  // Connect to Wifi Network
+  // Connect Device to Wifi Network
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -46,53 +59,101 @@ void setup() {
     Serial.println("WiFi connected successfully.");
   }
   
-  // Handlers
+  // Server Handlers
   server.on("/", handleRootPath);
-  server.on("/parameters", handleArgs);
+  server.on("/toggleRelay",handleToggleRelay);
+  server.on("/queryRelay",handleQueryRelay);
   
   // Start the Server
   server.begin();
   if(debug){
-    Serial.println("Server listening.");
-    Serial.print("http://");
+    Serial.println("Server listening...");
+    Serial.print("URL: http://");
     Serial.print(WiFi.localIP());
     Serial.println("/");
+    Serial.println("");
   }
     
-  
-}
-
-
-void handleRootPath(){
-  server.send(200, "text/plain", "Nothing here!");
-}
-
-
-void handleArgs(){
-
-  for (int i = 0; i < server.args(); i++) {
-  
-    if(server.argName(i) == "RelayState"){
-      if(server.arg(i) == 1){
-        server.send(200, "text/plain", String(digitalRead(pRelay01)));
-      }
-    }
-
-    if(server.argName(i) == "RelayToggle"){
-      if(server.arg(i) == 0){
-        digitalWrite(pRelay01,LOW);
-      }
-      if(server.arg(i) == 1){
-        digitalWrite(pRelay01,HIGH);
-      }
-      
-    }
-  
-  }
-  
 }
 
 // Loop
 void loop() {
   server.handleClient();
+}
+
+void handleRootPath(){
+  server.send(200, "text/plain", "");
+  if(debug){
+    Serial.println("Client hit the root directory.");
+  }
+}
+
+void handleQueryRelay(){
+  
+  int result = 999;
+  int relayId = server.arg(0).toInt();
+  String message;
+  
+  if(server.argName(0) == "relay"){
+    
+    result = digitalRead(relays[relayId]);
+
+    // Send Response to Client
+    server.send(200, "text/plain", String(result));
+    
+    // Logging
+    if(debug){
+      String message = "Client queried the state of relay["+String(relayId)+"]. Result: "+String(result)+".";
+      Serial.println(message);
+    }
+    
+  }
+  
+}
+
+void handleToggleRelay(){
+  
+  int relayId = server.argName(0).toInt();
+  int relayToggle = server.arg(0).toInt();
+  String message;
+  
+  if(relayToggle == 0){ // OFF
+    
+    digitalWrite(relays[relayId],LOW);
+    
+    if(debug){
+      message = "Toggled relay["+String(relayId)+"] OFF.";
+    } else {
+      message = "0";
+    }
+
+    // Send Response to Client
+    server.send(200, "text/plain", message);
+    
+    // Logging
+    if(debug){
+      Serial.println(message);
+    }
+    
+  }
+  
+  if(relayToggle == 1){ // ON
+    
+    digitalWrite(relays[relayId],HIGH);
+    
+    if(debug){
+      message = "Toggled relay["+String(relayId)+"] ON.";
+    } else {
+      message = "1";
+    }
+
+    // Send Response to Client
+    server.send(200, "text/plain", message);
+    
+    // Logging
+    if(debug){
+      Serial.println(message);
+    }
+  }  
+
 }
