@@ -27,8 +27,6 @@ void setup() {
   if(debug){
     Serial.begin(9600);
     delay(1000);
-  
-    // Connect to WiFi network
     Serial.println();
     Serial.println();
     Serial.print("Connecting to ");
@@ -45,76 +43,46 @@ void setup() {
   }
   if(debug){
     Serial.println("");
-    Serial.println("WiFi connected");
+    Serial.println("WiFi connected successfully.");
   }
+  
+  // Handlers
+  server.on("/", handleRootPath);
+  server.on("/parameters", handleArgs);
   
   // Start the Server
   server.begin();
   if(debug){
-    Serial.println("Server Started!");
-    Serial.print("Use this URL to connect: ");
+    Serial.println("Server listening.");
     Serial.print("http://");
     Serial.print(WiFi.localIP());
     Serial.println("/");
+  }
+    
+  
+}
+
+void handleRootPath(){
+  server.send(200, "text/plain", "Nothing here!");
+}
+
+void handleArgs(){
+
+  for (int i = 0; i < server.args(); i++) {
+  
+    if(server.argName(i) == "RelayState01"){
+
+      server.send(200, "text/plain", String(digitalRead(pRelay01)));
+      
+    }
+  
   }
   
 }
 
 // Loop
 void loop() {
-  
-  // Check if a client has connected
-  WiFiClient client = server.available();
-  if (!client) {
-    return;
-  }
 
-  // Wait until the client sends some data
-  Serial.println("New Client!");
-  while(!client.available()){
-    delay(1);
-  }
+  server.handleClient();
 
-  // Read the first line of the request
-  String request = client.readStringUntil('\r');
-  Serial.println(request);
-  client.flush();
- 
-  // Match the request
-  int value = LOW;
-  if (request.indexOf("/RELAY=ON") != -1)  {
-    digitalWrite(pRelay01, LOW);
-    value = LOW;
-  }
-  if (request.indexOf("/RELAY=OFF") != -1)  {
-    digitalWrite(pRelay01, HIGH);
-    value = HIGH;
-  }
-
-  if (request.indexOf("/
-
-
-  // Return the response
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/html");
-  client.println(""); //  do not forget this one
-  client.println("<!DOCTYPE HTML>");
-  client.println("<html>");
- 
-  client.print("Relay State: ");
- 
-  if(value == HIGH) {
-    client.print("Closed");
-  } else {
-    client.print("Open");
-  }
-  client.println("<br><br>");
-  client.println("<a href=\"/RELAY=ON\"\"><button>Open Relay</button></a>");
-  client.println("<a href=\"/RELAY=OFF\"\"><button>Close Relay</button></a><br />");  
-  client.println("</html>");
- 
-  delay(1);
-  Serial.println("Client Disconnected.");
-  Serial.println("");  
-  
 }
