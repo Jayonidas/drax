@@ -1,5 +1,6 @@
 // Includes
 #include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
 
 // Network Data
 const char* ssid = "HauntedMansion";
@@ -11,8 +12,8 @@ const int pRelay01 = 13; // GPIO13
 // Logging
 const bool debug = true;
 
-// Wifi Server Object
-WiFiServer server(80);
+// Server Object
+ESP8266WebServer server(80);
 
 // Setup
 void setup() {
@@ -89,6 +90,9 @@ void loop() {
     digitalWrite(pRelay01, HIGH);
     value = HIGH;
   }
+
+  if (request.indexOf("/
+
 
   // Return the response
   client.println("HTTP/1.1 200 OK");
