@@ -2,7 +2,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
-// Network Data
+// Network Info
 const char* ssid = "HauntedMansion";
 const char* password = "monkeybaileyluna";
 
@@ -62,17 +62,29 @@ void setup() {
   
 }
 
+
 void handleRootPath(){
   server.send(200, "text/plain", "Nothing here!");
 }
+
 
 void handleArgs(){
 
   for (int i = 0; i < server.args(); i++) {
   
-    if(server.argName(i) == "RelayState01"){
+    if(server.argName(i) == "RelayState"){
+      if(server.arg(i) == 1){
+        server.send(200, "text/plain", String(digitalRead(pRelay01)));
+      }
+    }
 
-      server.send(200, "text/plain", String(digitalRead(pRelay01)));
+    if(server.argName(i) == "RelayToggle"){
+      if(server.arg(i) == 0){
+        digitalWrite(pRelay01,LOW);
+      }
+      if(server.arg(i) == 1){
+        digitalWrite(pRelay01,HIGH);
+      }
       
     }
   
@@ -82,7 +94,5 @@ void handleArgs(){
 
 // Loop
 void loop() {
-
   server.handleClient();
-
 }
