@@ -1,3 +1,7 @@
+// Notes:
+// Servo range (full): 400-2544
+// gate range: 400-875
+
 // Includes
 #include <ESP8266WebServer.h>
 
