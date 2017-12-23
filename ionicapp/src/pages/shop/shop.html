@@ -9,7 +9,14 @@
 
 
 <ion-content padding>
-
-<h3> There will be SHOP controls here. </h3>
-
+  <div align="center">
+    <button (click)="openCloseBlastGate(1, true)" ion-button color="dark" block large icon-left>
+      <ion-icon name="radio-button-off"></ion-icon>
+      Open Blast Gate
+    </button>
+    <button (click)="openCloseBlastGate(1, false)" ion-button color="dark" block large icon-left>
+      <ion-icon name="close-circle"></ion-icon>
+      Close Blast Gate
+    </button>
+  </div>    
 </ion-content>

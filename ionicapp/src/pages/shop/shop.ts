@@ -18,6 +18,15 @@ export class ShopPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  openCloseBlastGate(gateID, open){
+
+    var ip = "192.168.1.23";
+
+    var url = "http://"+ip+"/openBlastGate?gate="+gateID+"&open="+open;
+    fetch(url);
+
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShopPage');
   }

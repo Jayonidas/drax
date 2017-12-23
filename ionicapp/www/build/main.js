@@ -29,12 +29,17 @@ var ShopPage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
     }
+    ShopPage.prototype.openCloseBlastGate = function (gateID, open) {
+        var ip = "192.168.1.23";
+        var url = "http://" + ip + "/openBlastGate?gate=" + gateID + "&open=" + open;
+        fetch(url);
+    };
     ShopPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ShopPage');
     };
     ShopPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-shop',template:/*ion-inline-start:"D:\_JG\code\drax\ionicapp\src\pages\shop\shop.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Shop</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n<h3> There will be SHOP controls here. </h3>\n\n</ion-content>'/*ion-inline-end:"D:\_JG\code\drax\ionicapp\src\pages\shop\shop.html"*/,
+            selector: 'page-shop',template:/*ion-inline-start:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\shop\shop.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Shop</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <div align="center">\n\n    <button (click)="openCloseBlastGate(1, true)" ion-button color="dark" block large icon-left>\n\n      <ion-icon name="radio-button-off"></ion-icon>\n\n      Open Blast Gate\n\n    </button>\n\n    <button (click)="openCloseBlastGate(1, false)" ion-button color="dark" block large icon-left>\n\n      <ion-icon name="close-circle"></ion-icon>\n\n      Close Blast Gate\n\n    </button>\n\n  </div>    \n\n</ion-content>'/*ion-inline-end:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\shop\shop.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], ShopPage);
@@ -79,7 +84,7 @@ var ThermostatPage = (function () {
     };
     ThermostatPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-thermostat',template:/*ion-inline-start:"D:\_JG\code\drax\ionicapp\src\pages\thermostat\thermostat.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Thermostat</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n<h3> There will be NEST stuff here. </h3>\n\n</ion-content>\n'/*ion-inline-end:"D:\_JG\code\drax\ionicapp\src\pages\thermostat\thermostat.html"*/,
+            selector: 'page-thermostat',template:/*ion-inline-start:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\thermostat\thermostat.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Thermostat</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n<h3> There will be NEST stuff here. </h3>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\thermostat\thermostat.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], ThermostatPage);
@@ -162,6 +167,11 @@ var HomePage = (function () {
     function HomePage(navCtrl) {
         this.navCtrl = navCtrl;
     }
+    HomePage.prototype.openCloseBlastGate = function (gateID, open) {
+        var ip = "192.168.1.23";
+        var url = "http://" + ip + "/openBlastGate?gate=" + gateID + "&open=" + open;
+        fetch(url);
+    };
     HomePage.prototype.toggleRelay = function (relayID) {
         var ip = "192.168.0.6";
         // Get Current Relay State and then Toggle Relay
@@ -183,11 +193,12 @@ var HomePage = (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"D:\_JG\code\drax\ionicapp\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <div align="center">\n    <button (click)="toggleRelay(1)" ion-button color="dark" block large icon-left>\n      <ion-icon name="bulb"></ion-icon>\n      Toggle Relay #1\n    </button>   \n    <button (click)="toggleRelay(2)" ion-button color="dark" block large icon-left>\n      <ion-icon name="bulb"></ion-icon>\n      Toggle Relay #2\n    </button> \n    <button (click)="toggleRelay(3)" ion-button color="dark" block large icon-left>\n      <ion-icon name="bulb"></ion-icon>\n      Toggle Relay #3\n    </button>  \n  </div>\n\n</ion-content>\n'/*ion-inline-end:"D:\_JG\code\drax\ionicapp\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Home</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <div align="center">\n\n    <button (click)="toggleRelay(1)" ion-button color="dark" block large icon-left>\n\n      <ion-icon name="outlet"></ion-icon>\n\n      Toggle Relay\n\n    </button>   \n\n    <button (click)="openCloseBlastGate(1,1)" ion-button color="dark" block large icon-left>\n\n      <ion-icon name="radio-button-off"></ion-icon>\n\n      Open Blast Gate\n\n    </button>\n\n    <button (click)="openCloseBlastGate(1,0)" ion-button color="dark" block large icon-left>\n\n      <ion-icon name="close-circle"></ion-icon>\n\n      Close Blast Gate\n\n    </button>        \n\n  </div>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object])
     ], HomePage);
     return HomePage;
+    var _a;
 }());
 
 //# sourceMappingURL=home.js.map
@@ -239,7 +250,7 @@ var ListPage = (function () {
     };
     ListPage = ListPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"D:\_JG\code\drax\ionicapp\src\pages\list\list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>List</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n      {{item.title}}\n      <div class="item-note" item-end>\n        {{item.note}}\n      </div>\n    </button>\n  </ion-list>\n  <div *ngIf="selectedItem" padding>\n    You navigated here from <b>{{selectedItem.title}}</b>\n  </div>\n</ion-content>\n'/*ion-inline-end:"D:\_JG\code\drax\ionicapp\src\pages\list\list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\list\list.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>List</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n\n      {{item.title}}\n\n      <div class="item-note" item-end>\n\n        {{item.note}}\n\n      </div>\n\n    </button>\n\n  </ion-list>\n\n  <div *ngIf="selectedItem" padding>\n\n    You navigated here from <b>{{selectedItem.title}}</b>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\list\list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], ListPage);
@@ -411,7 +422,7 @@ var MyApp = (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"D:\_JG\code\drax\ionicapp\src\app\app.html"*/'<ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"D:\_JG\code\drax\ionicapp\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\app\app.html"*/'<ion-menu [content]="content">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-title>Menu</ion-title>\n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n\n        {{p.title}}\n\n      </button>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
@@ -456,7 +467,7 @@ var MusicPage = (function () {
     };
     MusicPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-music',template:/*ion-inline-start:"D:\_JG\code\drax\ionicapp\src\pages\music\music.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Music</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n<h3> There will be SONOS stuff here. </h3>\n\n</ion-content>\n'/*ion-inline-end:"D:\_JG\code\drax\ionicapp\src\pages\music\music.html"*/,
+            selector: 'page-music',template:/*ion-inline-start:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\music\music.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Music</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n<h3> There will be SONOS stuff here. </h3>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Jay\Desktop\_Jay\code\drax\ionicapp\src\pages\music\music.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], MusicPage);

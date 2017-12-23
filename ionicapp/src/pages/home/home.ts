@@ -11,6 +11,15 @@ export class HomePage {
 
   }
 
+  openCloseBlastGate(gateID, open){
+
+    var ip = "192.168.1.23";
+
+    var url = "http://"+ip+"/openBlastGate?gate="+gateID+"&open="+open;
+    fetch(url);
+
+  }
+
   toggleRelay(relayID){
 
     var ip = "192.168.0.6";

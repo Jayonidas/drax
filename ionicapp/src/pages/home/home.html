@@ -11,17 +11,17 @@
 
   <div align="center">
     <button (click)="toggleRelay(1)" ion-button color="dark" block large icon-left>
-      <ion-icon name="bulb"></ion-icon>
-      Toggle Relay #1
+      <ion-icon name="outlet"></ion-icon>
+      Toggle Relay
     </button>   
-    <button (click)="toggleRelay(2)" ion-button color="dark" block large icon-left>
-      <ion-icon name="bulb"></ion-icon>
-      Toggle Relay #2
-    </button> 
-    <button (click)="toggleRelay(3)" ion-button color="dark" block large icon-left>
-      <ion-icon name="bulb"></ion-icon>
-      Toggle Relay #3
-    </button>  
+    <button (click)="openCloseBlastGate(1,1)" ion-button color="dark" block large icon-left>
+      <ion-icon name="radio-button-off"></ion-icon>
+      Open Blast Gate
+    </button>
+    <button (click)="openCloseBlastGate(1,0)" ion-button color="dark" block large icon-left>
+      <ion-icon name="close-circle"></ion-icon>
+      Close Blast Gate
+    </button>        
   </div>
 
 </ion-content>

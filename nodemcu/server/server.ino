@@ -4,15 +4,17 @@
 
 // Includes
 #include <ESP8266WebServer.h>
+#include <Servo.h>
 
 // Network Info
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "HauntedMansion";
+const char* password = "monkeybaileyluna";
 
 // Pin Layout (NodeMCU)
 const int pRelay01 = 12; // GPIO12 (D6)
 const int pRelay02 = 13; // GPIO13 (D7)
 const int pRelay03 = 15; // GPIO15 (D8)
+const int pServo = 14; // TEMP
 
 // Relay ID Array
 int relays[4] = {
@@ -28,8 +30,16 @@ const bool debug = true;
 // Server Object
 ESP8266WebServer server(80);
 
+// Servo Object
+Servo myServo;
+
+int pos = 400;
+
 // Setup
 void setup() {
+
+  myServo.attach(pServo);
+  myServo.writeMicroseconds(400);
 
   // Pin Modes
   pinMode(pRelay01,OUTPUT);
@@ -67,6 +77,7 @@ void setup() {
   server.on("/", handleRootPath);
   server.on("/toggleRelay",handleToggleRelay);
   server.on("/queryRelay",handleQueryRelay);
+  server.on("/openBlastGate",handleBlastGate);
   
   // Start the Server
   server.begin();
@@ -90,6 +101,20 @@ void handleRootPath(){
   if(debug){
     Serial.println("Client hit the root directory.");
   }
+}
+
+void handleBlastGate(){
+  int gateId = server.arg(0).toInt();
+  int action = server.arg(1).toInt();
+  if(action == 1){
+    myServo.writeMicroseconds(950);
+    Serial.println("Opening.");
+  }
+  if(action == 0){
+    myServo.writeMicroseconds(500);
+    Serial.println("Closing.");
+  }
+  server.send(200, "text/plain", "Ok!");
 }
 
 void handleQueryRelay(){
